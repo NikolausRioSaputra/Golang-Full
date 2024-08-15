@@ -1,0 +1,85 @@
+basePath: /api/v1
+definitions:
+  main.HTTPError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  main.Test:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Ini adalah dokumentasi Swagger untuk API Test Operation di Golang.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Test Operation API
+  version: "1.0"
+paths:
+  /test:
+    post:
+      consumes:
+      - application/json
+      description: Membuat test baru.
+      parameters:
+      - description: Test Info
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/main.Test'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Test'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.HTTPError'
+      summary: Create Test
+      tags:
+      - tests
+  /test/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Mengambil data test berdasarkan ID.
+      parameters:
+      - description: Test ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Test'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.HTTPError'
+      summary: Get Test
+      tags:
+      - tests
+swagger: "2.0"
+tags:
+- description: Operations related to testing
+  name: tests
